@@ -1,6 +1,6 @@
+document.addEventListener('DOMContentLoaded', () => {
 
-
-const fetchData = (url, cb, domEl) => {
+const fetchData = async (url, cb, domEl) => {
     try {
         let res =  axios.get(url)
         cb(res.data, domEl)
@@ -11,6 +11,7 @@ const fetchData = (url, cb, domEl) => {
 
 
 const fillUlWithCars = (data, domEl) => {
+    debugger
     domEl.innerHTML = "";
     data.cars.forEach(el => {
         const li = document.createElement("li");
@@ -30,15 +31,13 @@ const fillSelectBar =  (data, domEl) => {
 }
 
 
-document.addEventListener('DOMContentloaded', () => {
-    let allCars = document.querySelector(".allCars");
+    let allCars = document.querySelector("#allCars");
     let select = document.querySelector("select");
     let carsForOneUser = document.querySelector("#carsForOneUser");
     select.addEventListener("change", (e) => {
         fetchData(`http://localhost:3000/users/${e.target.id}/cars`, fillUlWithCars, carsForOneUser)
     })
     
-    
-    fetchData("http:/localhost:3000/cars", fillUlWithCars, allCars)
-    fetchData("http://localhost:3000/users", fillselectBar, select);
+    fetchData("http://localhost:3000/cars", fillUlWithCars, allCars)
+    fetchData("http://localhost:3000/users", fillSelectBar, select);
 })
