@@ -2,11 +2,11 @@ const db = require("../../db/index");
 
 const getAllCars = async (req, res, next) => {
   try {
-    const cars = db.any("SELECT * FROMS cars");
+    let cars = db.any("SELECT * FROM cars");
     res.json({
       status: "success",
       message: "all users",
-      users
+      payload: cars
     });
   } catch (err) {
     // next(err);
@@ -114,4 +114,4 @@ const updateCarFeature = async (req, res, next) => {
   }
 };
 
-module.exports = { createCar, deleteCar, updateCar, updateCarFeature };
+module.exports = { getAllCars, createCar, deleteCar, updateCar, updateCarFeature };

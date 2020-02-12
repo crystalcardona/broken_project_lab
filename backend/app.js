@@ -3,8 +3,8 @@ const cors = require('cors');
 const app = express(); 
 const bodyParser = require('body-parser');
 
-const PORT = 3000; 
-const carsRouter = require('./queries/cars/cars');
+const port = 3000; 
+const carsRouter = require('./routes/cars/cars');
 const usersRouter = require('./routes/users/users');
 
 
@@ -17,7 +17,7 @@ app.use('/users', usersRouter);
 app.use(cors);
 
 app.use((err, req, res, next) => {
-    res.status(500).json({
+    res.status(400).json({
         err
     })
 })
@@ -25,5 +25,5 @@ app.use((err, req, res, next) => {
 
 
 
-app.listen(PORT, () => console.log("Listening"));
+app.listen(port, () => console.log("Listening"));
  
