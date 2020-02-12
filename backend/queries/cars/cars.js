@@ -40,8 +40,7 @@ const getSingleCar = async (req, res, next) => {
 const createCar = async (req, res, next) => {
   try {
     await db.none(
-      `INSERT INTO cars (brand, model, year, owner_id) VALUES('${brand}', '${model}', '${year}', '${owner_id})'`,
-      req.body
+      `INSERT INTO cars (brand, model, year, owner_id) VALUES('${req.body.brand}', '${req.body.model}', '${req.body.year}', '${req.body.owner_id}')`
     );
     res.json({
       status: "succss",
@@ -53,12 +52,13 @@ const createCar = async (req, res, next) => {
       payload: null,
       message: err
     });
+    next(err)
   }
 };
 
 const deleteCar = async (req, res, next) => {
   try {
-    let result = await db.result("DELETE FROM cars WHERE id=$1 RETURNING *", req.params.id);
+    let result = await db.one("DELETE FROM cars WHERE id=$1 RETURNING *", [req.params.id]);
     res.json({
       status: "success",
       message: "You destroyed the car",
