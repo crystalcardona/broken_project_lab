@@ -6,7 +6,7 @@ const getAllUsers = async (req, res, next) => {
     res.json({
       status: "success",
       message: "all users",
-      users
+      payload: users
     });
   } catch (err) {
     res.json({
@@ -23,7 +23,7 @@ const getSingleUser = async (req, res, next) => {
     let user = await db.one(`SELECT * FROM users WHERE id=${req.params.id}`);
     res.json({
       status: "success",
-      user,
+      payload: user,
       message: "Received ONE user!"
     });
   } catch (err) {
@@ -39,7 +39,7 @@ const getSingleUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   try {
-    await db.none("DELETE FROM pets WHERE id=$1", req.params.id);
+    await db.none("DELETE FROM users WHERE id=$1", [req.params.id]);
     res.json({
       status: "success",
       message: "You destroyed the user",
@@ -57,8 +57,7 @@ const deleteUser = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   try {
     const user = await db.one(
-      "INSERT INTO users (username) VALUES(${username}) RETURNING *",
-      req.body
+      `INSERT INTO users (username) VALUES('${req.body.username}') RETURNING *`
     );
     res.json({
       status: "succss",
