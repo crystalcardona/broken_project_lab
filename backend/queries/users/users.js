@@ -1,27 +1,37 @@
-const db = require("../../../db/index");
+const db = require("../../db/index");
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await db.any("SELECT * FROM users");
+    let users = await db.any("SELECT * FROM users");
     res.json({
       status: "success",
       message: "all users",
       users
     });
   } catch (err) {
+    res.json({
+      status: "error",
+      payload: null,
+      message: err
+    });
     next(err);
   }
 };
 
 const getSingleUser = async (req, res, next) => {
   try {
-    let user = await db.one(`SELECT * FROM users WHERE id=${id}`);
+    let user = await db.one(`SELECT * FROM users WHERE id=${req.params.id}`);
     res.json({
       status: "success",
       user,
       message: "Received ONE user!"
     });
   } catch (err) {
+    res.json({
+      status: "error",
+      payload: null,
+      message: err
+    });
     next(err);
   }
 };
@@ -35,6 +45,11 @@ const deleteUser = async (req, res, next) => {
       message: "You destroyed the user",
     });
   } catch (err) {
+    res.json({
+      status: "error",
+      payload: null,
+      message: err
+    });
     next(err);
   }
 };
