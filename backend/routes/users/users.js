@@ -8,9 +8,9 @@ const {
 const userCarRouter = require("./cars/userCars");
 
 userRouter.get("/", getAllUsers);
-userRouter.get("/:id", getAllUsers);
+userRouter.get("/:id", getSingleUser);
 userRouter.delete("/:id", deleteUser);
-userRouter.post("/", createUser)
-userRouter.use("/id/cars", userCarRouter)
+userRouter.post("/", createUser);
+userRouter.get("/:id/cars", userCarRouter);
 
-module.exports = {userRouter};
+module.exports = userRouter;

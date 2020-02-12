@@ -107,7 +107,7 @@ const updateCarFeature = async (req, res, next) => {
     if (req.body.year && req.body.year.toLowerCase() === "null") {
       req.body.year = null;
     }
-
+    await
     db.none(
       "UPDATE cars SET " + queryString + " WHERE id=" + req.params.id,
       req.body
